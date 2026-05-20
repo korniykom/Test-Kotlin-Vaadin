@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: testtask
+vaadin:
+  launch-browser: true
