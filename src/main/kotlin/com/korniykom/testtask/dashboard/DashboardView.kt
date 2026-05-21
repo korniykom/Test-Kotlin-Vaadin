@@ -1,6 +1,7 @@
 package com.korniykom.testtask.dashboard
 
 import com.github.mvysny.karibudsl.v10.*
+import com.korniykom.testtask.dashboard.dialogs.CreateUserDialog
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.router.PageTitle
@@ -46,7 +47,9 @@ class DashboardView : KComposite() {
                 if (isAdmin) {
                     button("Create User") {
                         addClickListener {
+                            CreateUserDialog { name, email, password ->
 
+                            }.open()
                         }
                     }
                 }
