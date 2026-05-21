@@ -1,6 +1,7 @@
 package com.korniykom.testtask.dashboard
 
 import com.github.mvysny.karibudsl.v10.button
+import com.korniykom.testtask.dashboard.dialogs.EditUserDialog
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import java.time.LocalDateTime
@@ -28,7 +29,11 @@ class UserGrid(isAdmin: Boolean):  Grid<UserRow>(UserRow::class.java, false) {
                 HorizontalLayout().apply {
                     isSpacing = true
                     add(button("Edit") {
+                        addClickListener {
+                            EditUserDialog(user){ name, email ->
 
+                            }.open()
+                        }
                     })
                     add(button("Delete") {
 
