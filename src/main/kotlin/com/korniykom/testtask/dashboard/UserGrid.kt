@@ -1,6 +1,7 @@
 package com.korniykom.testtask.dashboard
 
 import com.github.mvysny.karibudsl.v10.button
+import com.korniykom.testtask.dashboard.dialogs.DeleteUserDialog
 import com.korniykom.testtask.dashboard.dialogs.EditUserDialog
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
@@ -36,7 +37,11 @@ class UserGrid(isAdmin: Boolean):  Grid<UserRow>(UserRow::class.java, false) {
                         }
                     })
                     add(button("Delete") {
+                        addClickListener {
+                            DeleteUserDialog(user) {
 
+                            }.open()
+                        }
                     })
                 }
             }.setHeader("Actions").setAutoWidth(true)
