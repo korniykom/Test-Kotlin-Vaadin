@@ -10,6 +10,9 @@ vaadin-bom = { module = "com.vaadin:vaadin-bom", version.ref = "vaadin" }
 vaadin-dev = { module = "com.vaadin:vaadin-dev" }
 vaadin-springboot-starter = { module = "com.vaadin:vaadin-spring-boot-starter" }
 
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa"}
+potgresql = { module = "org.postgresql:postgresql"}
+
 kotlin-refrect = {module = "org.jetbrains.kotlin:kotlin-reflect" }
 
 karibu-dsl = { module = "com.github.mvysny.karibudsl:karibu-dsl", version.ref = "karibu-dsl"}

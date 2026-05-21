@@ -22,6 +22,8 @@ repositories {
 
 dependencies {
 	implementation(libs.karibu.dsl)
+	implementation(libs.spring.boot.starter.data.jpa)
+	runtimeOnly(libs.potgresql)
 	developmentOnly(libs.vaadin.dev)
 	implementation(libs.vaadin.springboot.starter)
 	implementation(libs.kotlin.refrect)
