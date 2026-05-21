@@ -1,9 +1,9 @@
-package com.korniykom.testtask.dashboard.dialogs
+package com.korniykom.testtask.ui.dashboard.dialogs
 
 import com.github.mvysny.karibudsl.v10.button
 import com.github.mvysny.karibudsl.v10.p
 import com.github.mvysny.karibudsl.v10.verticalLayout
-import com.korniykom.testtask.dashboard.UserRow
+import com.korniykom.testtask.ui.dashboard.UserRow
 import com.vaadin.flow.component.dialog.Dialog
 
 class DeleteUserDialog(

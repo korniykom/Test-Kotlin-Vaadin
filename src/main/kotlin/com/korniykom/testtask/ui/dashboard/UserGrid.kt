@@ -1,8 +1,8 @@
-package com.korniykom.testtask.dashboard
+package com.korniykom.testtask.ui.dashboard
 
 import com.github.mvysny.karibudsl.v10.button
-import com.korniykom.testtask.dashboard.dialogs.DeleteUserDialog
-import com.korniykom.testtask.dashboard.dialogs.EditUserDialog
+import com.korniykom.testtask.ui.dashboard.dialogs.DeleteUserDialog
+import com.korniykom.testtask.ui.dashboard.dialogs.EditUserDialog
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import java.time.LocalDateTime
