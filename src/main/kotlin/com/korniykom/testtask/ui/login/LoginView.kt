@@ -20,6 +20,7 @@ class LoginView : KComposite() {
             alignItems = FlexComponent.Alignment.CENTER
             justifyContentMode = FlexComponent.JustifyContentMode.CENTER
             loginForm() {
+                action = "login"
                 addLoginListener {
                     UI.getCurrent().navigate("dashboard")
                 }

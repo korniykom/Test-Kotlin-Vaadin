@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
-): UserDetailsService {
+) : UserDetailsService {
     fun getUsers(name: String?, email: String?, pageable: Pageable): Page<User> {
         val spec = Specification<User> { userTable, _, criteriaBuilder ->
 
@@ -51,7 +51,7 @@ class UserService(
         val user = User(
             name = name,
             email = email,
-            password = passwordEncoder.encode(password)!! ,
+            password = passwordEncoder.encode(password)!!,
             role = role,
         )
         return userRepository.save(user)
@@ -69,15 +69,44 @@ class UserService(
         userRepository.deleteById(id)
     }
 
-    fun findByEmail(email: String): User? {
-        return userRepository.findByEmail(email)
+    fun findByName(name: String): User? {
+        return userRepository.findByName(name)
     }
 
-    override fun loadUserByUsername(email: String): UserDetails {
-        val user = userRepository.findByEmail(email)
-            ?: throw UsernameNotFoundException("User $email not found")
+    fun countUsers(name: String?, email: String?): Long {
+        val spec = Specification<User> { userTable, _, cb ->
+            val predicates = mutableListOf<Predicate>()
+
+            if (!name.isNullOrBlank()) {
+                predicates.add(
+                    cb.like(
+                        cb.lower(userTable.get("name")),
+                        "%${name.lowercase()}%"
+                    )
+                )
+            }
+
+            if (!email.isNullOrBlank()) {
+                predicates.add(
+                    cb.like(
+                        cb.lower(userTable.get("email")),
+                        "%${email.lowercase()}%"
+                    )
+                )
+            }
+
+            cb.and(*predicates.toTypedArray())
+        }
+
+        return userRepository.count(spec)
+    }
+
+    override fun loadUserByUsername(username: String): UserDetails {
+        val user = userRepository.findByName(username)
+            ?: throw UsernameNotFoundException("User $username not found")
+        println("Loading user: ${user.name}, role: ${user.role.name}")
         return org.springframework.security.core.userdetails.User(
-            user.email,
+            user.name,
             user.password,
             listOf(SimpleGrantedAuthority("ROLE_${user.role.name}"))
         )

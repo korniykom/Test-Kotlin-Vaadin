@@ -1,6 +1,6 @@
 package com.korniykom.testtask.configuration
 
-import com.korniykom.testtask.repository.UserRepository
+import com.korniykom.testtask.service.UserService
 import com.korniykom.testtask.ui.login.LoginView
 import com.vaadin.flow.spring.security.VaadinSecurityConfigurer
 import org.springframework.context.annotation.Bean
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 
 
 @EnableWebSecurity
@@ -21,13 +20,13 @@ class SecurityConfig {
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-
+    fun securityFilterChain(http: HttpSecurity, userService: UserService): SecurityFilterChain {
         http
+            .csrf { it.disable() }
+            .userDetailsService(userService)
             .with(VaadinSecurityConfigurer.vaadin()) { configurer ->
                 configurer.loginView(LoginView::class.java)
             }
-
         return http.build()
     }
 }

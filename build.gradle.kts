@@ -1,53 +1,53 @@
 plugins {
-	alias(libs.plugins.kotlin.jvm)
-	alias(libs.plugins.kotlin.spring)
-	alias(libs.plugins.spring.boot)
-	alias(libs.plugins.spring.dependency.management)
-	alias(libs.plugins.vaadin)
-	alias(libs.plugins.kotlin.jpa)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.vaadin)
+    alias(libs.plugins.kotlin.jpa)
 }
 
 group = "com.korniykom"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation(libs.karibu.dsl)
-	implementation(libs.spring.boot.starter.data.jpa)
-	implementation(libs.spring.boot.starter.security)
-	runtimeOnly(libs.potgresql)
-	developmentOnly(libs.vaadin.dev)
-	implementation(libs.vaadin.springboot.starter)
-	implementation(libs.kotlin.refrect)
+    implementation(libs.karibu.dsl)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.spring.boot.starter.security)
+    runtimeOnly(libs.potgresql)
+    developmentOnly(libs.vaadin.dev)
+    implementation(libs.vaadin.springboot.starter)
+    implementation(libs.kotlin.refrect)
 }
 
 dependencyManagement {
-	imports {
-		mavenBom(libs.vaadin.bom.get().toString())
-	}
+    imports {
+        mavenBom(libs.vaadin.bom.get().toString())
+    }
 }
 
 kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
-	}
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+    }
 }
 
 allOpen {
-	annotation("jakarta.persistence.Entity")
-	annotation("jakarta.persistence.MappedSuperclass")
-	annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
