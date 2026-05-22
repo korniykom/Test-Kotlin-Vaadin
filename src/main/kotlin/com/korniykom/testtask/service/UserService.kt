@@ -51,7 +51,7 @@ class UserService(
         val user = User(
             name = name,
             email = email,
-            password = passwordEncoder.encode(password)!!,
+            password = passwordEncoder.encode(password)!! ,
             role = role,
         )
         return userRepository.save(user)

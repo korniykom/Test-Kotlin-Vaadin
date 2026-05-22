@@ -8,7 +8,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import java.time.LocalDateTime
 
 data class UserRow(
-    val id: Long,
+    val id: String,
     val name: String,
     val email: String,
     val createdAt: LocalDateTime,
