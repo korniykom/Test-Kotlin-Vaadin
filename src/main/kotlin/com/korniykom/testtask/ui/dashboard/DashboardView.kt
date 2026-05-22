@@ -1,18 +1,23 @@
 package com.korniykom.testtask.ui.dashboard
 
 import com.github.mvysny.karibudsl.v10.*
+import com.korniykom.testtask.service.UserService
 import com.korniykom.testtask.ui.dashboard.dialogs.CreateUserDialog
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.TextField
+import com.vaadin.flow.data.provider.DataProvider
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.auth.AnonymousAllowed
+import org.springframework.data.domain.PageRequest
 import java.util.Locale.getDefault
 
 @Route("dashboard")
 @PageTitle("Dashboard")
 @AnonymousAllowed
-class DashboardView : KComposite() {
+class DashboardView(
+    private val userService: UserService,
+) : KComposite() {
     private val isAdmin = true
 
     private lateinit var nameFilter: TextField
@@ -63,253 +68,46 @@ class DashboardView : KComposite() {
             }
 
             userGrid = UserGrid(isAdmin).apply {
-                setItems(sampleData())
+                dataProvider = createDataProvider()
             }
             add(userGrid)
         }
     }
 
     private fun filterGrid() {
-        val name = nameFilter.value.trim().lowercase(getDefault())
-        val email = emailFilter.value.trim().lowercase(getDefault())
-
-        userGrid.setItems(sampleData().filter {
-            it.name.lowercase(getDefault()).contains(name) && it.email.lowercase(getDefault()).contains(email)
-        })
+        userGrid.dataProvider.refreshAll()
     }
 
-    private fun sampleData() = listOf(
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            1,
-            "Alice Smith",
-            "alice@example.com",
-            java.time.LocalDateTime.now().minusDays(10),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            2,
-            "Bob Jones",
-            "bob@example.com",
-            java.time.LocalDateTime.now().minusDays(5),
-            java.time.LocalDateTime.now()
-        ),
-        UserRow(
-            3,
-            "Carol White",
-            "carol@example.com",
-            java.time.LocalDateTime.now().minusDays(1),
-            java.time.LocalDateTime.now()
-        ),
+    private fun createDataProvider(): DataProvider<UserRow, Void> {
 
-    )
+        return DataProvider.fromCallbacks(
+            { query ->
+
+                val page = userService.getUsers(
+                    nameFilter.value,
+                    emailFilter.value,
+                    PageRequest.of(query.page, query.pageSize)
+                )
+
+                page.content.map {
+                    UserRow(
+                        it.id,
+                        it.name,
+                        it.email,
+                        it.createdAt,
+                        it.updatedAt
+                    )
+                }.stream()
+            },
+
+            { _ ->
+                userService.getUsers(
+                    nameFilter.value,
+                    emailFilter.value,
+                    PageRequest.of(0, 20)
+                ).totalElements.toInt()
+            }
+        )
+    }
 
 }
