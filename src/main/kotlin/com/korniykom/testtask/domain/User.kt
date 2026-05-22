@@ -19,7 +19,7 @@ enum class Role {
 class User(
     @Id
     @GeneratedValue(GenerationType.UUID)
-    val id: String,
+    val id: String = "",
 
     @Column
     var name: String,
