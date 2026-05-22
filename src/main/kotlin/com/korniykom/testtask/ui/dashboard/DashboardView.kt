@@ -6,10 +6,12 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
+import com.vaadin.flow.server.auth.AnonymousAllowed
 import java.util.Locale.getDefault
 
 @Route("dashboard")
 @PageTitle("Dashboard")
+@AnonymousAllowed
 class DashboardView : KComposite() {
     private val isAdmin = true
 
