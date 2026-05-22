@@ -1,4 +1,4 @@
-package com.korniykom.testtask.domain
+package com.korniykom.testtask.domain.models
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

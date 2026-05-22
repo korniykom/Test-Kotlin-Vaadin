@@ -1,13 +1,17 @@
 package com.korniykom.testtask.service
 
-import com.korniykom.testtask.domain.Role
-import com.korniykom.testtask.domain.User
+import com.korniykom.testtask.domain.models.Role
+import com.korniykom.testtask.domain.models.User
 import com.korniykom.testtask.repository.UserRepository
 import jakarta.persistence.criteria.Predicate
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -17,7 +21,7 @@ import java.time.LocalDateTime
 class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
-) {
+): UserDetailsService {
     fun getUsers(name: String?, email: String?, pageable: Pageable): Page<User> {
         val spec = Specification<User> { userTable, _, criteriaBuilder ->
 
@@ -47,7 +51,7 @@ class UserService(
         val user = User(
             name = name,
             email = email,
-            password = passwordEncoder.encode(password),
+            password = passwordEncoder.encode(password)!!,
             role = role,
         )
         return userRepository.save(user)
@@ -69,5 +73,13 @@ class UserService(
         return userRepository.findByEmail(email)
     }
 
-
+    override fun loadUserByUsername(email: String): UserDetails {
+        val user = userRepository.findByEmail(email)
+            ?: throw UsernameNotFoundException("User $email not found")
+        return org.springframework.security.core.userdetails.User(
+            user.email,
+            user.password,
+            listOf(SimpleGrantedAuthority("ROLE_${user.role.name}"))
+        )
+    }
 }
