@@ -1,9 +1,10 @@
 package com.korniykom.testtask.ui.dashboard
 
 import com.github.mvysny.karibudsl.v10.button
-import com.korniykom.testtask.ui.dashboard.dialogs.DeleteUserDialog
-import com.korniykom.testtask.ui.dashboard.dialogs.EditUserDialog
+import com.korniykom.testtask.domain.models.User
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.grid.Grid
+import com.vaadin.flow.component.grid.GridVariant
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import java.time.LocalDateTime
 
@@ -15,33 +16,37 @@ data class UserRow(
     val updatedAt: LocalDateTime,
 )
 
-
-class UserGrid(isAdmin: Boolean):  Grid<UserRow>(UserRow::class.java, false) {
+class UserGrid(
+    isAdmin: Boolean,
+    private val onEdit: ((User) -> Unit)? = null,
+    private val onDelete: ((User) -> Unit)? = null,
+) : Grid<User>(User::class.java, false) {
 
     init {
+        addThemeVariants(GridVariant.LUMO_ROW_STRIPES, GridVariant.LUMO_COLUMN_BORDERS)
         setWidthFull()
-        addColumn(UserRow::name).setHeader("Name").setSortable(true).setAutoWidth(true)
-        addColumn(UserRow::email).setHeader("Email").setSortable(true).setAutoWidth(true)
-        addColumn(UserRow::createdAt).setHeader("Created at").setSortable(true).setAutoWidth(true)
-        addColumn(UserRow::updatedAt).setHeader("Updated at").setSortable(true).setAutoWidth(true)
+        height = "100%"
 
-        if(isAdmin) {
+        addColumn(User::name).setHeader("Name").setSortable(true).setKey("name").setAutoWidth(true)
+        addColumn(User::email).setHeader("Email").setSortable(true).setKey("email").setAutoWidth(true)
+        addColumn(User::createdAt).setHeader("Created At").setSortable(true).setKey("createdAt").setAutoWidth(true)
+        addColumn(User::updatedAt).setHeader("Updated At").setSortable(true).setKey("updatedAt").setAutoWidth(true)
+
+        if (isAdmin) {
             addComponentColumn { user ->
                 HorizontalLayout().apply {
                     isSpacing = true
                     add(button("Edit") {
-                        addClickListener {
-                            EditUserDialog(user){ name, email ->
-
-                            }.open()
-                        }
+                        addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY)
+                        addClickListener { onEdit?.invoke(user) }
                     })
                     add(button("Delete") {
-                        addClickListener {
-                            DeleteUserDialog(user) {
-
-                            }.open()
-                        }
+                        addThemeVariants(
+                            ButtonVariant.LUMO_SMALL,
+                            ButtonVariant.LUMO_ERROR,
+                            ButtonVariant.LUMO_TERTIARY
+                        )
+                        addClickListener { onDelete?.invoke(user) }
                     })
                 }
             }.setHeader("Actions").setAutoWidth(true)

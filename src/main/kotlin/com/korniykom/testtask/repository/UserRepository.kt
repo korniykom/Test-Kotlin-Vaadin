@@ -4,6 +4,6 @@ import com.korniykom.testtask.domain.models.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
-interface UserRepository: JpaRepository<User, String>, JpaSpecificationExecutor<User> {
-    fun findByEmail(email: String): User?
+interface UserRepository : JpaRepository<User, String>, JpaSpecificationExecutor<User> {
+    fun findByName(name: String): User?
 }

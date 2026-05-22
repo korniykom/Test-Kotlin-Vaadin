@@ -10,20 +10,20 @@ vaadin-bom = { module = "com.vaadin:vaadin-bom", version.ref = "vaadin" }
 vaadin-dev = { module = "com.vaadin:vaadin-dev" }
 vaadin-springboot-starter = { module = "com.vaadin:vaadin-spring-boot-starter" }
 
-spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa"}
-spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security"}
-potgresql = { module = "org.postgresql:postgresql"}
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+potgresql = { module = "org.postgresql:postgresql" }
 
-kotlin-refrect = {module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-refrect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 
-karibu-dsl = { module = "com.github.mvysny.karibudsl:karibu-dsl", version.ref = "karibu-dsl"}
+karibu-dsl = { module = "com.github.mvysny.karibudsl:karibu-dsl", version.ref = "karibu-dsl" }
 
 
 [plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"}
-kotlin-spring = { id  = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin"}
-kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin"}
-spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot"}
-spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management"}
-vaadin = { id = "com.vaadin", version.ref = "vaadin"}
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+vaadin = { id = "com.vaadin", version.ref = "vaadin" }
 
